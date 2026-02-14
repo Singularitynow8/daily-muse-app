@@ -11,7 +11,7 @@ const tabs = [
   { key: 'today', label: 'Today', icon: Sparkles },
   { key: 'archive', label: 'Archive', icon: Archive },
   { key: 'favorites', label: 'Favorites', icon: Heart },
-  { key: 'notifications', label: 'Notifications', icon: Bell },
+  { key: 'notifications', label: 'Alerts', icon: Bell },
 ];
 
 function App() {
@@ -42,22 +42,6 @@ function App() {
               Daily <span>Muse</span>
             </div>
           </div>
-
-          <nav className="nav-tabs">
-            {tabs.map(({ key, label, icon: Icon }) => (
-              <button
-                key={key}
-                className={`nav-tab ${activeTab === key ? 'active' : ''}`}
-                onClick={() => setActiveTab(key)}
-              >
-                <Icon size={15} />
-                <span className="nav-label">{label}</span>
-                {key === 'notifications' && unreadCount > 0 && (
-                  <span className="badge">{unreadCount}</span>
-                )}
-              </button>
-            ))}
-          </nav>
         </div>
       </header>
 
@@ -92,6 +76,27 @@ function App() {
           />
         )}
       </main>
+
+      {/* Bottom Navigation Island */}
+      <nav className="bottom-nav">
+        <div className="bottom-nav-inner">
+          {tabs.map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              className={`bottom-nav-tab ${activeTab === key ? 'active' : ''}`}
+              onClick={() => setActiveTab(key)}
+            >
+              <div className="bottom-nav-icon-wrap">
+                <Icon size={20} />
+                {key === 'notifications' && unreadCount > 0 && (
+                  <span className="bottom-nav-badge">{unreadCount}</span>
+                )}
+              </div>
+              <span className="bottom-nav-label">{label}</span>
+            </button>
+          ))}
+        </div>
+      </nav>
 
       {showToast && (
         <div className="copied-toast">Copied to clipboard!</div>

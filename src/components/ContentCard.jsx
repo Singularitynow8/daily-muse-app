@@ -16,12 +16,12 @@ const labelMap = {
   art: 'Art of the Day',
   sculpture: 'Sculpture',
   photography: 'Photography',
-  quote: 'Quote of the Day',
+  quote: 'The Examined Life',
   astronomy: 'Astronomy Pic',
   poem: 'Poem of the Day',
 };
 
-export default function ContentCard({ item, isFavorite, onToggleFavorite, onCopied, featured }) {
+export default function ContentCard({ item, isFavorite, onToggleFavorite, onCopied }) {
   if (!item) return null;
 
   const Icon = iconMap[item.category] || Palette;
@@ -38,36 +38,39 @@ export default function ContentCard({ item, isFavorite, onToggleFavorite, onCopi
     : null;
 
   return (
-    <div className={`content-card ${featured ? 'featured' : ''} ${isQuote ? 'quote-card' : ''}`}>
+    <div className={`content-card ${isQuote ? 'quote-card' : ''}`}>
       <div className="card-category">
         <Icon size={14} />
         {label}
       </div>
 
-      {/* Image */}
-      {item.imageUrl && !isQuote && (
+      {/* Image - shown for all non-quote cards */}
+      {!isQuote ? (
         <div className="card-image-container">
-          <img
-            className="card-image"
-            src={item.imageUrl}
-            alt={item.title}
-            loading="lazy"
-            onError={(e) => {
-              e.target.style.display = 'none';
-            }}
-          />
+          {item.imageUrl ? (
+            <img
+              className="card-image"
+              src={item.imageUrl}
+              alt={item.title}
+              loading="lazy"
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
+          ) : (
+            <div className="card-image-placeholder" />
+          )}
           <div className="card-image-overlay" />
+        </div>
+      ) : (
+        <div className="card-quote-area">
+          <div className="quote-text">{item.text}</div>
+          <div className="quote-author">&mdash; {item.author}</div>
         </div>
       )}
 
       <div className="card-body">
-        {/* Quote layout */}
-        {isQuote ? (
-          <>
-            <div className="quote-text">{item.text}</div>
-            <div className="quote-author">&mdash; {item.author}</div>
-          </>
-        ) : (
+        {!isQuote && (
           <>
             <h3 className="card-title">{item.title}</h3>
             {creator && <div className="card-subtitle">{creator}</div>}

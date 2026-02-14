@@ -16,6 +16,8 @@ export default function Today({ isFavorite, toggleFavorite, onCopied }) {
 
   const isToday = currentDate === getDateString();
 
+  const categories = ['music', 'art', 'sculpture', 'photography', 'poem', 'astronomy', 'quote'];
+
   return (
     <>
       <div className="date-header">
@@ -33,60 +35,15 @@ export default function Today({ isFavorite, toggleFavorite, onCopied }) {
       </div>
 
       <div className="content-grid">
-        {/* Music - featured full width */}
-        <ContentCard
-          item={content.music}
-          isFavorite={isFavorite(content.music?.id)}
-          onToggleFavorite={toggleFavorite}
-          onCopied={onCopied}
-          featured
-        />
-
-        {/* Art and Sculpture side by side */}
-        <ContentCard
-          item={content.art}
-          isFavorite={isFavorite(content.art?.id)}
-          onToggleFavorite={toggleFavorite}
-          onCopied={onCopied}
-        />
-        <ContentCard
-          item={content.sculpture}
-          isFavorite={isFavorite(content.sculpture?.id)}
-          onToggleFavorite={toggleFavorite}
-          onCopied={onCopied}
-        />
-
-        {/* Photography full width */}
-        <ContentCard
-          item={content.photography}
-          isFavorite={isFavorite(content.photography?.id)}
-          onToggleFavorite={toggleFavorite}
-          onCopied={onCopied}
-          featured
-        />
-
-        {/* Quote and Poem side by side */}
-        <ContentCard
-          item={content.quote}
-          isFavorite={isFavorite(content.quote?.id)}
-          onToggleFavorite={toggleFavorite}
-          onCopied={onCopied}
-        />
-        <ContentCard
-          item={content.poem}
-          isFavorite={isFavorite(content.poem?.id)}
-          onToggleFavorite={toggleFavorite}
-          onCopied={onCopied}
-        />
-
-        {/* Astronomy full width */}
-        <ContentCard
-          item={content.astronomy}
-          isFavorite={isFavorite(content.astronomy?.id)}
-          onToggleFavorite={toggleFavorite}
-          onCopied={onCopied}
-          featured
-        />
+        {categories.map((cat) => (
+          <ContentCard
+            key={cat}
+            item={content[cat]}
+            isFavorite={isFavorite(content[cat]?.id)}
+            onToggleFavorite={toggleFavorite}
+            onCopied={onCopied}
+          />
+        ))}
       </div>
     </>
   );
