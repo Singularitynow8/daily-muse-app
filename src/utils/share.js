@@ -11,7 +11,9 @@ export function shareToFacebook(item) {
 }
 
 export function shareViaEmail(item) {
-  const subject = `Daily Muse: ${item.title}`;
+  const subject = item.category === 'quote'
+    ? `Daily Muse: Quote by ${item.author}`
+    : `Daily Muse: ${item.title}`;
   const body = getShareText(item);
   window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
@@ -33,10 +35,15 @@ export async function copyToClipboard(item) {
 }
 
 function getShareText(item) {
+  if (item.category === 'quote') {
+    return `"${item.text}" \u2014 ${item.author}\n\nDiscovered on Daily Muse`;
+  }
+
   const parts = [`"${item.title}"`];
 
   if (item.composer) parts.push(`by ${item.composer}`);
   else if (item.artist) parts.push(`by ${item.artist}`);
+  else if (item.architect) parts.push(`by ${item.architect}`);
   else if (item.poet) parts.push(`by ${item.poet}`);
   else if (item.author) parts.push(`\u2014 ${item.author}`);
   else if (item.source) parts.push(`by ${item.source}`);

@@ -136,7 +136,7 @@ const poems = [
     year: 1911,
     excerpt: 'Ithaka gave you the marvelous journey.\nWithout her you would not have set out.',
     description: 'Using Odysseus\' voyage as metaphor, Cavafy celebrates the journey itself over the destination.',
-    aboutUrl: 'https://en.wikipedia.org/wiki/Ithaka_(poem)',
+    aboutUrl: 'https://en.wikipedia.org/wiki/Ithaca_(poem)',
     category: 'poem',
   },
   {
@@ -216,7 +216,7 @@ const poems = [
     year: 1920,
     excerpt: 'If you could hear, at every jolt, the blood\nCome gargling from the froth-corrupted lungs...\nMy friend, you would not tell with such high zest\nThe old Lie: Dulce et decorum est pro patria mori.',
     description: 'Owen describes a gas attack in the trenches of World War I, shattering the myth that dying for one\'s country is glorious.',
-    aboutUrl: 'https://en.wikipedia.org/wiki/Dulce_et_Decorum_est_(poem)',
+    aboutUrl: 'https://en.wikipedia.org/wiki/Dulce_et_Decorum_est',
     category: 'poem',
   },
   {

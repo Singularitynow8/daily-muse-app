@@ -1,6 +1,6 @@
 const quotes = [
   { id: 'quote-001', text: 'The unexamined life is not worth living.', author: 'Socrates', category: 'quote' },
-  { id: 'quote-002', text: 'What stands in the way becomes the way.', author: 'Marcus Aurelius', category: 'quote' },
+  { id: 'quote-002', text: 'The best revenge is not to be like your enemy.', author: 'Marcus Aurelius', category: 'quote' },
   { id: 'quote-003', text: 'He who has a why to live can bear almost any how.', author: 'Friedrich Nietzsche', category: 'quote' },
   { id: 'quote-004', text: 'The only way to do great work is to love what you do.', author: 'Steve Jobs', category: 'quote' },
   { id: 'quote-005', text: 'It is not the strongest of the species that survives, nor the most intelligent, but the one most responsive to change.', author: 'Charles Darwin', category: 'quote' },
