@@ -1,10 +1,12 @@
-import { Heart, ExternalLink, Calendar, Music, Palette, Box, Camera, Quote, Telescope, BookOpen } from 'lucide-react';
+import { useState } from 'react';
+import { Heart, ExternalLink, Calendar, Music, Palette, Box, Camera, Quote, Telescope, BookOpen, Building2, ChevronDown, ChevronUp } from 'lucide-react';
 import ShareButton from './ShareButton';
 
 const iconMap = {
   music: Music,
   art: Palette,
   sculpture: Box,
+  architecture: Building2,
   photography: Camera,
   quote: Quote,
   astronomy: Telescope,
@@ -15,22 +17,28 @@ const labelMap = {
   music: 'Classical Music',
   art: 'Art of the Day',
   sculpture: 'Sculpture',
+  architecture: 'Architecture',
   photography: 'Photography',
   quote: 'The Examined Life',
   astronomy: 'Astronomy Pic',
   poem: 'Poem of the Day',
 };
 
+// Categories that show images
+const IMAGE_CATEGORIES = ['music', 'art', 'sculpture', 'architecture', 'photography', 'astronomy'];
+
 export default function ContentCard({ item, isFavorite, onToggleFavorite, onCopied }) {
   if (!item) return null;
+  const [poemExpanded, setPoemExpanded] = useState(false);
 
   const Icon = iconMap[item.category] || Palette;
   const label = labelMap[item.category] || item.category;
   const isQuote = item.category === 'quote';
   const isPoem = item.category === 'poem';
   const isMusic = item.category === 'music';
+  const showImage = IMAGE_CATEGORIES.includes(item.category) && item.imageUrl;
 
-  const creator = item.composer || item.artist || item.poet || item.source || null;
+  const creator = item.composer || item.artist || item.architect || item.poet || item.source || null;
   const yearDisplay = item.year
     ? item.year < 0
       ? `${Math.abs(item.year)} BCE`
@@ -38,62 +46,82 @@ export default function ContentCard({ item, isFavorite, onToggleFavorite, onCopi
     : null;
 
   return (
-    <div className={`content-card ${isQuote ? 'quote-card' : ''}`}>
+    <div className={`content-card ${isQuote ? 'quote-card' : ''} ${isPoem ? 'poem-card' : ''}`}>
       <div className="card-category">
         <Icon size={14} />
         {label}
       </div>
 
-      {/* Image - shown for all non-quote cards */}
-      {!isQuote ? (
-        <div className="card-image-container">
-          {item.imageUrl ? (
-            <img
-              className="card-image"
-              src={item.imageUrl}
-              alt={item.title}
-              loading="lazy"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
-          ) : (
-            <div className="card-image-placeholder" />
-          )}
-          <div className="card-image-overlay" />
-        </div>
-      ) : (
+      {/* QUOTE: just text + author */}
+      {isQuote && (
         <div className="card-quote-area">
           <div className="quote-text">{item.text}</div>
           <div className="quote-author">&mdash; {item.author}</div>
         </div>
       )}
 
+      {/* IMAGE: for visual categories */}
+      {showImage && (
+        <div className="card-image-container">
+          <img
+            className="card-image"
+            src={item.imageUrl}
+            alt={item.title}
+            loading="lazy"
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
+          <div className="card-image-overlay" />
+        </div>
+      )}
+
+      {/* BODY: for non-quote cards */}
       <div className="card-body">
-        {!isQuote && (
+        {!isQuote && !isPoem && (
           <>
             <h3 className="card-title">{item.title}</h3>
             {creator && <div className="card-subtitle">{creator}</div>}
             <div className="card-meta">
-              {yearDisplay && (
-                <span><Calendar size={11} /> {yearDisplay}</span>
-              )}
+              {yearDisplay && <span><Calendar size={11} /> {yearDisplay}</span>}
               {item.period && <span>{item.period}</span>}
               {item.medium && <span>{item.medium}</span>}
+              {item.location && <span>{item.location}</span>}
             </div>
-
-            {/* Poem excerpt */}
-            {isPoem && item.excerpt && (
-              <div className="poem-excerpt">{item.excerpt}</div>
-            )}
-
             {item.description && (
               <p className="card-description">{item.description}</p>
             )}
           </>
         )}
 
-        {/* Actions */}
+        {/* POEM: snippet + expand */}
+        {isPoem && (
+          <>
+            <h3 className="card-title">{item.title}</h3>
+            {creator && <div className="card-subtitle">{creator}</div>}
+            <div className="card-meta">
+              {yearDisplay && <span><Calendar size={11} /> {yearDisplay}</span>}
+            </div>
+            {item.excerpt && (
+              <div className={`poem-excerpt ${poemExpanded ? 'expanded' : ''}`}>
+                {item.excerpt}
+              </div>
+            )}
+            <button
+              className="poem-toggle"
+              onClick={() => setPoemExpanded(!poemExpanded)}
+            >
+              {poemExpanded ? (
+                <><ChevronUp size={14} /> Show less</>
+              ) : (
+                <><ChevronDown size={14} /> Read full poem</>
+              )}
+            </button>
+            {item.description && (
+              <p className="card-description">{item.description}</p>
+            )}
+          </>
+        )}
+
+        {/* ACTIONS */}
         <div className="card-actions">
           <div className="card-actions-left">
             <button
@@ -120,7 +148,7 @@ export default function ContentCard({ item, isFavorite, onToggleFavorite, onCopi
               </a>
             )}
 
-            {/* About link for non-quote items */}
+            {/* About / Learn more link — every card EXCEPT quote */}
             {!isQuote && item.aboutUrl && (
               <a
                 className="action-btn about-link"
@@ -129,7 +157,7 @@ export default function ContentCard({ item, isFavorite, onToggleFavorite, onCopi
                 rel="noopener noreferrer"
               >
                 <ExternalLink size={14} />
-                About
+                Learn more
               </a>
             )}
           </div>

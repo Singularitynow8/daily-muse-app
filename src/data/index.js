@@ -1,6 +1,7 @@
 import music from './music';
 import art from './art';
 import sculpture from './sculpture';
+import architecture from './architecture';
 import photography from './photography';
 import quotes from './quotes';
 import astronomy from './astronomy';
@@ -10,6 +11,7 @@ export const allContent = {
   music,
   art,
   sculpture,
+  architecture,
   photography,
   quote: quotes,
   astronomy,
@@ -20,10 +22,11 @@ export const categories = [
   { key: 'music', label: 'Classical Music', icon: 'Music' },
   { key: 'art', label: 'Art', icon: 'Palette' },
   { key: 'sculpture', label: 'Sculpture', icon: 'Box' },
+  { key: 'architecture', label: 'Architecture', icon: 'Building' },
   { key: 'photography', label: 'Photography', icon: 'Camera' },
-  { key: 'quote', label: 'Quote of the Day', icon: 'Quote' },
-  { key: 'astronomy', label: 'Astronomy', icon: 'Telescope' },
   { key: 'poem', label: 'Poem of the Day', icon: 'BookOpen' },
+  { key: 'astronomy', label: 'Astronomy', icon: 'Telescope' },
+  { key: 'quote', label: 'The Examined Life', icon: 'Quote' },
 ];
 
 export function getDailyItem(category, dateStr) {

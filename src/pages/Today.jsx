@@ -16,7 +16,7 @@ export default function Today({ isFavorite, toggleFavorite, onCopied }) {
 
   const isToday = currentDate === getDateString();
 
-  const categories = ['music', 'art', 'sculpture', 'photography', 'poem', 'astronomy', 'quote'];
+  const categories = ['music', 'art', 'sculpture', 'architecture', 'photography', 'poem', 'astronomy', 'quote'];
 
   return (
     <>
